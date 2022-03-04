@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:koishi/get/app_controller.dart';
 import 'package:koishi/pages/collections_overview_screen.dart';
 import 'package:koishi/pages/login_screen.dart';

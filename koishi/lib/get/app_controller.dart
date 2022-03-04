@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import "package:get/get.dart";
+import 'package:koishi/models/collection.dart';
 
 import '../models/user.dart';
 
@@ -11,6 +12,7 @@ class AppController extends GetxController {
   var appInitFailMessage = "".obs;
   var serverUrl = "".obs;
   var apiToken = "".obs;
+  var collections = List<Collection>.empty(growable: true).obs;
   User? user;
 
   static void setAndroidOverlayColor(String color) {

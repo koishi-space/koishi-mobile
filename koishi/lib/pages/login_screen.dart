@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void handleSubmitLogin() async {
+  void _handleSubmitLogin() async {
     if (_loginScreenFormKey.currentState!.validate()) {
       setState(() {
         loading = true;
@@ -159,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ? Column(
                             children: [
                               ElevatedButton(
-                                onPressed: handleSubmitLogin,
+                                onPressed: _handleSubmitLogin,
                                 child: const Text("Log in"),
                               ),
                               if (loginFailed)
