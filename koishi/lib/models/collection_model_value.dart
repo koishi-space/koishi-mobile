@@ -8,7 +8,7 @@ class CollectionModelValue {
   CollectionModelValue.fromJson(Map<String, dynamic> json)
       : columnName = json["columnName"],
         dataType = json["dataType"],
-        unit = json["unit"];
+        unit = json["unit"] ?? "";
 
   Map<String, dynamic> toJson() => {
         'columnName': columnName,

@@ -10,7 +10,9 @@ class CollectionModel {
   CollectionModel.fromJson(Map<String, dynamic> json)
       : id = json["_id"],
         parent = json["parent"],
-        value = json["value"];
+        value = (json["value"] as List<dynamic>)
+            .map((e) => CollectionModelValue.fromJson(e))
+            .toList();
 
   Map<String, dynamic> toJson() => {
         '_id': id,

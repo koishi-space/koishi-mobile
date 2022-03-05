@@ -13,7 +13,6 @@ class KoishiTheme {
     return base.copyWith(
         // Colors
         primaryColor: primaryColor,
-        splashColor: primaryColor,
         backgroundColor: backgroundColor,
 
         // Scaffold

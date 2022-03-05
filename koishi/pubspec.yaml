@@ -16,6 +16,8 @@ dependencies:
   get_storage: ^2.0.3
   connectivity: ^3.0.6
   jwt_decode: ^0.3.1
+  intl: ^0.17.0
+  date_time_picker: ^2.1.0
 
 dev_dependencies:
   flutter_test:

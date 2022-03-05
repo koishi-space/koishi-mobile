@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:koishi/models/collection.dart';
+import 'package:koishi/pages/add_record_screen.dart';
 
 class CollectionCard extends StatefulWidget {
   final Collection collection;
@@ -20,6 +22,15 @@ class _CollectionCardState extends State<CollectionCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       key: UniqueKey(),
+      onTap: () {
+        Get.to(
+          () => AddRecordScreen(
+            collectionId: widget.collection.id,
+            collectionTitle: widget.collection.title,
+          ),
+          transition: Transition.downToUp,
+        );
+      },
       child: Container(
         clipBehavior: Clip.antiAlias,
         width: MediaQuery.of(context).size.width,

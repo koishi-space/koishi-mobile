@@ -4,6 +4,7 @@ class HttpService {
   static Map<String, String> getHeaders() {
     return {
       "x-auth-token": AppController.to.apiToken.string,
+      'Content-type': 'application/json',
     };
   }
 
