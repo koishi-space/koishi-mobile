@@ -32,7 +32,13 @@ class User {
   }
 
   void logout() async {
+    AppController.to.apiToken.value = "";
     AppController.to.user = null;
     await GetStorage().remove("user");
+    await GetStorage().remove("api_token");
+  }
+
+  static User getLocalUser() {
+    return (GetStorage().read("user") as User);
   }
 }

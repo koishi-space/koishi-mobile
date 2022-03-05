@@ -22,6 +22,7 @@ class _ServerScreenState extends State<ServerScreen> {
   @override
   void initState() {
     AppController.setAndroidOverlayColor("whitesmoke");
+    _serverInputController.text = AppController.to.serverUrl.string;
     super.initState();
   }
 

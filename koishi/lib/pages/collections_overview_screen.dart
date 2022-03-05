@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:koishi/get/app_controller.dart';
 import 'package:koishi/models/collection.dart';
+import 'package:koishi/pages/profile_screen.dart';
 import 'package:koishi/services/koishi_api/collections_service.dart';
 import 'package:koishi/widgets/collection_card.dart';
 
@@ -40,7 +42,7 @@ class _CollectionsOverviewScreenState extends State<CollectionsOverviewScreen> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => Get.to(() => const ProfileScreen()),
             icon: const Icon(Icons.account_circle),
             color: Colors.black,
           )
