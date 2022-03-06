@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:koishi/get/app_controller.dart';
 import 'package:koishi/models/collection.dart';
 import 'package:koishi/pages/profile_screen.dart';
+import 'package:koishi/services/http_service.dart';
 import 'package:koishi/services/koishi_api/collections_service.dart';
 import 'package:koishi/widgets/collection_card.dart';
 
@@ -19,6 +20,8 @@ class _CollectionsOverviewScreenState extends State<CollectionsOverviewScreen> {
   List<Collection> collections = List<Collection>.empty(growable: true);
 
   Future<void> _loadCollections() async {
+    if (!(await HttpService.checkInternetConnectionWithDialog(
+        _loadCollections))) return;
     setState(() {
       loading = true;
     });

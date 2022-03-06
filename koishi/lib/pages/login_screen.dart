@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:koishi/get/app_controller.dart';
 import 'package:koishi/pages/collections_overview_screen.dart';
+import 'package:koishi/services/http_service.dart';
 import 'package:koishi/services/koishi_api/auth_service.dart';
 
 import '../models/user.dart';
@@ -39,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _handleSubmitLogin() async {
     if (_loginScreenFormKey.currentState!.validate()) {
+      if (!(await HttpService.checkInternetConnection())) return;
       setState(() {
         loading = true;
       });

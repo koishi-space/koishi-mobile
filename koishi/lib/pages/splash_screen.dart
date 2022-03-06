@@ -14,7 +14,9 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   void _initApp() {
-    Future.delayed(Duration.zero, () => AppInitService.onStartInit()).then((v) {
+    Future.delayed(
+            const Duration(seconds: 2), () => AppInitService.onStartInit())
+        .then((v) {
       // If server_url is null, show server selection page
       if (AppController.to.serverUrl.string == "" ||
           AppController.to.apiToken.string == "") {

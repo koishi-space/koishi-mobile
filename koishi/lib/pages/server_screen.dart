@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:koishi/get/app_controller.dart';
 import 'package:koishi/pages/login_screen.dart';
+import 'package:koishi/services/http_service.dart';
 import 'package:koishi/services/koishi_api/ping_service.dart';
 
 class ServerScreen extends StatefulWidget {
@@ -95,6 +96,8 @@ class _ServerScreenState extends State<ServerScreen> {
                             onPressed: () async {
                               if (_serverScreenFormKey.currentState!
                                   .validate()) {
+                                if (!(await HttpService
+                                    .checkInternetConnection())) return;
                                 setState(() {
                                   loading = true;
                                 });

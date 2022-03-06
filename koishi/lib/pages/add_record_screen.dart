@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:koishi/components/user_input_helper.dart';
 import 'package:koishi/models/collection_model.dart';
 import 'package:koishi/models/collection_model_value.dart';
+import 'package:koishi/services/http_service.dart';
 import 'package:koishi/services/koishi_api/collections_service.dart';
 
 class AddRecordScreen extends StatefulWidget {
@@ -25,7 +26,10 @@ class _AddRecordScreenState extends State<AddRecordScreen> {
   late CollectionModel collectionModel;
   bool loading = true;
 
-  Future<void> loadFields() async {
+  Future<void> _loadFields() async {
+    if (!(await HttpService.checkInternetConnectionWithDialog(_loadFields))) {
+      return;
+    }
     CollectionModel model =
         await KoishiApiCollectionsService.getModel(widget.collectionId);
     for (CollectionModelValue m in model.value) {
@@ -43,6 +47,7 @@ class _AddRecordScreenState extends State<AddRecordScreen> {
   }
 
   Future<void> _handleSubmitRow() async {
+    if (!(await HttpService.checkInternetConnection())) return;
     List<dynamic> payload = [];
     for (String x in fields.keys) {
       // Cast text to the original var type
@@ -140,7 +145,7 @@ class _AddRecordScreenState extends State<AddRecordScreen> {
 
   @override
   void initState() {
-    Future.delayed(Duration.zero, loadFields);
+    Future.delayed(Duration.zero, _loadFields);
     super.initState();
   }
 
