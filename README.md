@@ -1,5 +1,5 @@
 # Koishi-mobile
-Cross-platform mobile frontend for [Koishi](https://github.com/hendrychjan/koishi).
+Android mobile frontend for [Koishi](https://github.com/hendrychjan/koishi).
 
 Note: _The main and only functinality of Koishi mobile is adding new records to your collection. The rest you can do through the Koishi web app or via the Koishi RESTful API._
 
