@@ -13,6 +13,7 @@ class AppController extends GetxController {
   var serverUrl = "".obs;
   var apiToken = "".obs;
   var collections = List<Collection>.empty(growable: true).obs;
+  var appVersion = "".obs;
   User? user;
 
   static void setAndroidOverlayColor(String color) {

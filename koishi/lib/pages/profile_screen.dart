@@ -72,15 +72,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       .copyWith(fontSize: 16, fontStyle: FontStyle.italic),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: Text(
+                  AppController.to.serverUrl.string,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline2!
+                      .copyWith(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
               ElevatedButton(
-                  onPressed: () {
-                    AppController.to.user!.logout();
-                    Get.off(() => const ServerScreen(),
-                        transition: Transition.fade);
-                  },
-                  child: const Text("Log out"))
+                onPressed: () {
+                  AppController.to.user!.logout();
+                  Get.off(() => const ServerScreen(),
+                      transition: Transition.fade);
+                },
+                child: const Text("Log out"),
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      AppController.to.appVersion.string,
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                    const Text(
+                      "By Jan Hendrych for Koishi",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
             ],
-          )
+          ),
         ],
       ),
     );

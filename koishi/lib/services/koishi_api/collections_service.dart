@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:koishi/models/api_exception.dart';
 import 'package:koishi/models/collection.dart';
 import 'package:koishi/models/collection_model.dart';
 import 'package:koishi/services/http_service.dart';
@@ -44,10 +45,20 @@ class KoishiApiCollectionsService {
         body: jsonEncode(payload),
         headers: HttpService.getHeaders());
 
-    if (res.statusCode == 200) {
+    if (res.statusCode == 201) {
       return res.body;
+    } else if (res.statusCode == 400) {
+      throw ApiException(
+        statusCode: res.statusCode,
+        message: "Failed add new row",
+        body: res.body,
+      );
     } else {
-      throw "API error"; // TODO: implement http error handling
+      throw ApiException(
+        statusCode: res.statusCode,
+        message: "API Error",
+        body: null,
+      );
     }
   }
 }

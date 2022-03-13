@@ -1,6 +1,6 @@
 import 'package:get_storage/get_storage.dart';
 import 'package:koishi/get/app_controller.dart';
-
+import 'package:package_info_plus/package_info_plus.dart';
 import '../models/user.dart';
 
 class AppInitService {
@@ -18,5 +18,10 @@ class AppInitService {
     if (GetStorage().hasData("user")) {
       AppController.to.user = User.fromJson(GetStorage().read("user"));
     }
+
+    // Get the app info (version and build)
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    AppController.to.appVersion.value =
+        "v${packageInfo.version} build${packageInfo.buildNumber}";
   }
 }

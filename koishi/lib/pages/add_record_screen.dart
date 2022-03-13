@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:koishi/components/user_input_helper.dart';
+import 'package:koishi/models/api_exception.dart';
 import 'package:koishi/models/collection_model.dart';
 import 'package:koishi/models/collection_model_value.dart';
 import 'package:koishi/services/http_service.dart';
@@ -25,6 +29,7 @@ class _AddRecordScreenState extends State<AddRecordScreen> {
   Map<String, Map<String, dynamic>> fields = <String, Map<String, dynamic>>{};
   late CollectionModel collectionModel;
   bool loading = true;
+  List<dynamic> submitError = [];
 
   Future<void> _loadFields() async {
     if (!(await HttpService.checkInternetConnectionWithDialog(_loadFields))) {
@@ -64,7 +69,21 @@ class _AddRecordScreenState extends State<AddRecordScreen> {
       payload.add({"column": x, "data": val});
     }
 
-    await KoishiApiCollectionsService.addRow(widget.collectionId, payload);
+    try {
+      await KoishiApiCollectionsService.addRow(widget.collectionId, payload);
+    } catch (ex) {
+      if ((ex as ApiException).statusCode == 400) {
+        // 400 - Bad request
+        print(ex.body);
+        setState(() {
+          submitError = jsonDecode(ex.body) as List<dynamic>;
+        });
+        return;
+      } else {
+        // Some other error
+        // TODO: implement generic error handling
+      }
+    }
 
     Get.back();
     Get.snackbar("Row added", "A row added to ${widget.collectionTitle}");
@@ -138,6 +157,14 @@ class _AddRecordScreenState extends State<AddRecordScreen> {
     render.add(ElevatedButton(
       onPressed: _handleSubmitRow,
       child: const Text("Submit"),
+    ));
+
+    // Submit error messages
+    render.addAll(submitError.map(
+      (e) => Text(
+        e,
+        style: const TextStyle(color: Colors.red),
+      ),
     ));
 
     return render;
