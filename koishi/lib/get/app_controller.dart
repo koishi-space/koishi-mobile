@@ -14,6 +14,9 @@ class AppController extends GetxController {
   var apiToken = "".obs;
   var collections = List<Collection>.empty(growable: true).obs;
   var appVersion = "".obs;
+  var updateAvailable = false.obs;
+  var updateNotified = false.obs;
+  late Map<String, String> latestRelease;
   User? user;
 
   static void setAndroidOverlayColor(String color) {

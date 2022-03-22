@@ -6,6 +6,7 @@ import 'package:koishi/pages/profile_screen.dart';
 import 'package:koishi/services/http_service.dart';
 import 'package:koishi/services/koishi_api/collections_service.dart';
 import 'package:koishi/widgets/collection_card.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CollectionsOverviewScreen extends StatefulWidget {
   const CollectionsOverviewScreen({Key? key}) : super(key: key);
@@ -32,10 +33,53 @@ class _CollectionsOverviewScreenState extends State<CollectionsOverviewScreen> {
     });
   }
 
+  Future<void> _showUpdateDialog() async {
+    AppController.to.updateNotified.value = true;
+    return await Get.dialog(AlertDialog(
+      title: Text(
+        'Update available',
+        style: TextStyle(
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+      content: const Text("There is a new update available. Update now?"),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Get.back();
+          }, // Close the dialog
+          child: const Text(
+            'Cancel',
+            style: TextStyle(
+              color: Colors.grey,
+            ),
+          ),
+        ),
+        TextButton(
+            onPressed: () async {
+              Get.back();
+              await launch(AppController.to.latestRelease["url"]!);
+            }, // Close the dialog
+            child: Text(
+              'Update',
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+              ),
+            ))
+      ],
+    ));
+  }
+
   @override
   void initState() {
     Future.delayed(Duration.zero, () async => _loadCollections());
     AppController.setAndroidOverlayColor("white");
+
+    if (AppController.to.updateAvailable.value &&
+        !AppController.to.updateNotified.value) {
+      Future.delayed(const Duration(milliseconds: 1), _showUpdateDialog);
+    }
+
     super.initState();
   }
 

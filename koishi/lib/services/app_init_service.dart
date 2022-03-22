@@ -1,5 +1,7 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:koishi/get/app_controller.dart';
+import 'package:koishi/services/github_api/releases_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../models/user.dart';
 
@@ -23,5 +25,15 @@ class AppInitService {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     AppController.to.appVersion.value =
         "v${packageInfo.version} build${packageInfo.buildNumber}";
+
+    // Check if there is an update available
+    var conn = await (Connectivity().checkConnectivity());
+    if (conn != ConnectivityResult.none) {
+      var latestRelease = await GithubApiReleasesService.getLatestRelease();
+      AppController.to.latestRelease = latestRelease;
+      if (latestRelease["name"] != packageInfo.version) {
+        AppController.to.updateAvailable.value = true;
+      }
+    }
   }
 }
